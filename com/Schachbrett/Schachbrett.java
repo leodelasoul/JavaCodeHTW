@@ -82,10 +82,10 @@ public class Schachbrett extends JFrame implements MouseListener {
                 for (int col = 0; col < Schachbrett.this.field[row].length; col++) {
                     int x = col * this.widthRect;
                     if (Schachbrett.this.field[row][col] == State.MARKIERT) {
-                        int abstandX = this.widthRect / 3;
-                        int abstandY = this.heightRect / 3;
-                        int durchmesser = this.widthRect / 3;
+
+                        int durchmesser = this.widthRect/3;
                         g2.setColor(Color.RED);
+                        g2.drawOval(Schachbrett.this.fieldMitte[0],Schachbrett.this.fieldMitte[1],durchmesser,durchmesser);
                         g2.fillOval(Schachbrett.this.fieldMitte[0],Schachbrett.this.fieldMitte[1], durchmesser, durchmesser);
                       /*
                         g2.setStroke(new BasicStroke(3.0f));
@@ -126,9 +126,12 @@ public class Schachbrett extends JFrame implements MouseListener {
     setzt this.fieldMitte mit int Array mit Koordinate für die Mitte des Feldes
      */
     public void setFieldMitte(int zeile, int spalte) {
-        int x = Math.abs((this.canvas.widthRect * (spalte+1)) - (this.canvas.widthRect/2)); //multiplizierte x-Strecke des geklickten Fields minus der breite EINES fields
-        int y = Math.abs((this.canvas.heightRect * (zeile+1)) - (this.canvas.heightRect/2)); //multiplizierte y-Strecke des geklickten Fields minus der höhe EINES fields
+        int x = Math.abs((this.canvas.widthRect * (spalte+1)) - (this.canvas.widthRect/2)); //multiplizierte x-Strecke des
+        // geklickten Fields minus der breite EINES fields (a Seite)
+        int y = Math.abs((this.canvas.heightRect * (zeile+1)) - (this.canvas.heightRect/2)); //multiplizierte y-Strecke des
+        // geklickten Fields minus der höhe EINES fields (b Seite)
         this.fieldMitte = new int []{x,y};
+        System.out.println(x+ "  " + y);
     }
 
     @Override
