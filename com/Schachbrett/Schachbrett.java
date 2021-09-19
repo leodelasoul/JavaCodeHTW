@@ -85,8 +85,10 @@ public class Schachbrett extends JFrame implements MouseListener {
 
                         int durchmesser = this.widthRect/3;
                         g2.setColor(Color.RED);
-                        g2.drawOval(Schachbrett.this.fieldMitte[0],Schachbrett.this.fieldMitte[1],durchmesser,durchmesser);
-                        g2.fillOval(Schachbrett.this.fieldMitte[0],Schachbrett.this.fieldMitte[1], durchmesser, durchmesser);
+                        // das untere sieht jetzt bisschen kryptisch aus, aber:
+                        // wir hatten gesagt das man kreis mit: mitte und radius zeichnet
+                        // filloval aber ein rechteck macht, warum auch immer.... das heißt feldmitte zu holen ist falscher ansatz.
+                        g2.fillOval(Schachbrett.this.fieldMitte[0]-durchmesser/2,Schachbrett.this.fieldMitte[1]-durchmesser/2, durchmesser, durchmesser);
                       /*
                         g2.setStroke(new BasicStroke(3.0f));
 
