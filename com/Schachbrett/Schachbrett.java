@@ -83,20 +83,8 @@ public class Schachbrett extends JFrame implements MouseListener {
                     int x = col * this.widthRect;
                     if (Schachbrett.this.field[row][col] == State.MARKIERT) {
 
-                        int durchmesser = this.widthRect/3;
-                        g2.setColor(Color.RED);
-                        // das untere sieht jetzt bisschen kryptisch aus, aber:
-                        // wir hatten gesagt das man kreis mit: mitte und radius zeichnet
-                        // filloval aber ein rechteck macht, warum auch immer.... das heißt feldmitte zu holen ist falscher ansatz.
-                        g2.fillOval(Schachbrett.this.fieldMitte[0]-durchmesser/2,Schachbrett.this.fieldMitte[1]-durchmesser/2, durchmesser, durchmesser);
-                      /*
-                        g2.setStroke(new BasicStroke(3.0f));
-
-                        g2.drawLine((this.widthRect / 2), y + (this.heightRect /
-                                2), canvasWidth - (this.widthRect / 2), y + (this.heightRect / 2));
-                        g2.drawLine(x + (this.widthRect / 2), (this.heightRect / 2),
-                                x + (this.widthRect / 2), canvasHeight - (this.heightRect / 2));
-                                */
+                        drawRedDot(g2);
+                        drawLines(g2);
                     }
                 }
             }
@@ -133,7 +121,39 @@ public class Schachbrett extends JFrame implements MouseListener {
         int y = Math.abs((this.canvas.heightRect * (zeile+1)) - (this.canvas.heightRect/2)); //multiplizierte y-Strecke des
         // geklickten Fields minus der höhe EINES fields (b Seite)
         this.fieldMitte = new int []{x,y};
-        System.out.println(x+ "  " + y);
+    }
+
+
+    public void drawRedDot(Graphics2D g2){
+        int durchmesser = canvas.widthRect/3; //skaliert
+        g2.setColor(Color.RED);
+        // das untere sieht jetzt bisschen kryptisch aus, aber:
+        // wir hatten gesagt das man kreis mit: mitte und radius zeichnet
+        // filloval aber ein rechteck macht, warum auch immer.... das heißt feldmitte zu holen ist falscher ansatz.
+        g2.fillOval(Schachbrett.this.fieldMitte[0]-durchmesser/2,Schachbrett.this.fieldMitte[1]-durchmesser/2, durchmesser, durchmesser);
+
+    }
+
+    /*
+    wir haben die FieldMitte, welche uns hilft nun einfach die lines zu platzieren
+     */
+    public void drawLines(Graphics2D g2){
+        g2.setColor(Color.RED);
+        g2.setStroke(new BasicStroke(3.0f));
+
+        //vertikale Linie
+        int x1 = Schachbrett.this.fieldMitte[0];
+        int y1 = 0;
+        int x2 = Schachbrett.this.fieldMitte[0];
+        int y2 = canvas.getHeight();
+        g2.drawLine(x1,y1,x2,y2);
+
+        //horizontale Linie
+        int x11 = 0;
+        int y11 = Schachbrett.this.fieldMitte[1];
+        int x22 = canvas.getWidth();
+        int y22 = Schachbrett.this.fieldMitte[1];
+        g2.drawLine(x11,y11,x22,y22);
     }
 
     @Override
@@ -144,7 +164,7 @@ public class Schachbrett extends JFrame implements MouseListener {
         int spalte = x / this.canvas.widthRect;
         int zeile = y / this.canvas.heightRect;
 
-        setFieldMitte(zeile,spalte); // Notwendige Methode zum setten der FieldMitte
+        setFieldMitte(zeile,spalte); // Notwendige Methode zum setten der FieldMitte bei jedem Klick
 
         boolean bereitsMarkiert = false;
         if (Schachbrett.this.field[zeile][spalte] == State.MARKIERT) {
